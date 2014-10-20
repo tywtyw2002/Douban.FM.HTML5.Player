@@ -1,0 +1,107 @@
+#fm-player .cover {
+    float: left;
+    width: 245px;
+    height: 245px;
+}
+
+
+#r  span.artist {
+        margin: 25px 0 0 20px;
+        font-size: 23px; 
+        font-family: _sans; 
+        color:#333333;
+        display: block;
+}
+
+#r  span.title {
+
+        font-size: 13px; 
+        font-family: _sans; 
+        color:#33ad85;
+        display: block;
+        margin-left: 20px;
+        margin-top: 10px;
+}
+
+#r  span.album {
+
+        margin-left: 20px;
+        font-size: 12px; 
+        font-family: _sans; 
+        color:#333333;
+        display: block;
+}
+
+div #c{
+        height: 55px;
+        width: 265px;
+        float: right;
+
+}
+
+div #c .staroff{
+    display: inline-block;
+    background: url(img/staroff.svg);
+    width: 27px;
+    height: 27px;
+    margin-left: 90px;
+    background-size: 27px 27px;
+    text-indent: -9999px;
+}
+
+div #c .staron{
+    display: inline-block;
+    background: url(img/staron.svg);
+    width: 27px;
+    height: 27px;
+    margin-left: 90px;
+    background-size: 27px 27px;
+    text-indent: -9999px;
+}
+
+
+div #c .trash{
+    display: inline-block;
+    background: url(img/trash.svg);
+    width: 27px;
+    height: 27px;
+    background-size: 27px 27px;
+    text-indent: -9999px;
+    margin-left: 30px;
+}
+
+div #c .trash:hover{
+    display: inline-block;
+    background: url(img/trashh.svg);
+    width: 27px;
+    height: 27px;
+    background-size: 27px 27px;
+    text-indent: -9999px;
+    margin-left: 30px;
+}
+
+div #c .next{
+    display: inline-block;
+    background: url(img/next.svg);
+    width: 27px;
+    height: 27px;
+    background-size: 27px 27px;
+    text-indent: -9999px;
+    margin-left: 30px;
+}
+div #c .next:hover{
+    display: inline-block;
+    background: url(img/nexth.svg);
+    width: 27px;
+    height: 27px;
+    background-size: 27px 27px;
+    text-indent: -9999px;
+    margin-left: 30px;
+}
+
+div #r {
+
+        height: 190px;
+        width: 265px;
+        float: right;
+}
