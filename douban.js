@@ -25,36 +25,39 @@
             this.playList('n');
         },
 
-        getRequestData: function(v) {
+        getRequestData: function(v, s) {
             if (v != 'n' && v != 'p'){
                 console.log("error with value " + v);
                 v = 'n';
             }
-            return {
+            var x= {
                 type: v,
                 channel: this.channel,
                 from: 'mainsite',
                 kbps: 192,
                 r: makeRandomString(10)
             };
+            if (v == 'p'){
+                x['sid'] = s;
+            }
+            return x;
         },
 
         changeUI: function () {
             this.el = document.getElementById('fm-player');
             this.wrap = $('div.player-wrap').html('加载中...');
             this.channel = -3;
-            this.playList('n');
+            this.playList('n', 0);
         },
 
-        nextSong: function (){
+        nextSong: function (s){
             //decide is the end of playList
+            this.songId += 1;
             if (this.songId < this.songList.length) {
-                    this.songId += 1;
                     this.playSound();
                 } else {
                     console.log('end of list');
-
-                    this.playList('p');
+                    this.playList('p', s);
                 }
         },
 
@@ -70,11 +73,13 @@
                 window.clearInterval(processbar);
                 this.el.mp3.src=""; //cancel the downloading
                 $("#progress").css("width", "0px");
+                $(".r_time").text( '-0:00');
 
             }
 
             // todo change title of the page
-            var html = '<img class="cover" src="'+song.picture+'">';
+            var html = '<a href="http://music.douban.com' + song.album + '">';
+            html += '<img class="cover" src="'+song.picture+'"></a>';
             var rightPanel = "<span class=\"artist\">" + song.artist +"</span>";
             rightPanel +=  "<span class=\"album\">&lt; " + song.albumtitle + " &gt; " +  song.public_time + "</span>";
             rightPanel +=  "<span class=\"title\">" + song.title + "</span>";
@@ -109,16 +114,17 @@
                 $('#m').hide();
             });
 
-            $(".staron").click( function() {
-                
+            $(".staron").click( function() { 
                 user_record.decrease("liked");
-                this.attr("class", "staroff");
+                $(".staron").attr("class", "staroff");
+                that.unlikeSong(song.sid);
+
             });
 
             $(".staroff").click( function() {
-                
                 user_record.increase("liked");
-                this.attr("class", "staron");
+                $(".staroff").attr("class", "staron");
+                that.likeSong(song.sid);
             });
 
             $(".trash").click( function() {
@@ -133,7 +139,7 @@
             processbar = setInterval(this.updatebar, 500);
             $(this.el.mp3).bind('ended', function () {
                 that.reportEnd(song.sid);
-                that.nextSong();
+                that.nextSong(song.sid);
             });
         },
 
@@ -179,7 +185,6 @@
                 kbps: 192,
                 r: makeRandomString(10)
             };
-            that.likeSong(song.sid);
             this.reportSubmit(request);
         },
 
@@ -192,7 +197,6 @@
                 kbps: 192,
                 r: makeRandomString(10)
             };
-            that.unlikeSong(song.sid);
             this.reportSubmit(request);
 
         },
@@ -244,11 +248,11 @@
             });
         },
 
-        playList: function (v) {
+        playList: function (v, s) {
             console.log('playList');
             //var that = this;
             var that = this;
-            $.getJSON('/j/mine/playlist', doubanfmhtml5.getRequestData(v), function(ret) {
+            $.getJSON('/j/mine/playlist', doubanfmhtml5.getRequestData(v, s), function(ret) {
                 if (ret.r !== 0) {
                     alert('get playlist fail');
                     return;
