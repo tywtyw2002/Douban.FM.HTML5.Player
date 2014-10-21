@@ -14,8 +14,12 @@ javascript:(function(){var u='http://example.com/douban'; var r=new Date().getTi
 - [x] Add Music Pause control.
 - [ ] Add Music volum control.
 - [x] Add Music processbar/time remaining.
-- [ ] Work for Channel choose.
+- [x] Work for Channel choose.
 - [ ] Add support with fmx163.
+
+
+# Screenshot
+![shot1](http://ww4.sinaimg.cn/large/57d8aba6jw1eliqgyfhuhj21h60p0wiy.jpg)
 
 # Credits
 
