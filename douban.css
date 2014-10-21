@@ -4,9 +4,16 @@
     height: 245px;
 }
 
+#r span.r_time{
+        margin-left: 200px;
+        font-size: 11px; 
+        font-family: _sans; 
+        color:#333333;
+        display: block;
+}
 
 #r  span.artist {
-        margin: 25px 0 0 20px;
+        margin: 0px 0 0 20px;
         font-size: 23px; 
         font-family: _sans; 
         color:#333333;
@@ -24,7 +31,7 @@
 }
 
 #r  span.album {
-
+        margin-top: -3px;
         margin-left: 20px;
         font-size: 12px; 
         font-family: _sans; 
@@ -47,7 +54,21 @@ div #c .staroff{
     margin-left: 90px;
     background-size: 27px 27px;
     text-indent: -9999px;
+    cursor: pointer;
 }
+
+div #c .staroff:hover{
+    display: inline-block;
+    background: url(img/staroffh.svg);
+    width: 27px;
+    height: 27px;
+    margin-left: 90px;
+    background-size: 27px 27px;
+    text-indent: -9999px;
+    cursor: pointer;
+}
+
+
 
 div #c .staron{
     display: inline-block;
@@ -57,6 +78,7 @@ div #c .staron{
     margin-left: 90px;
     background-size: 27px 27px;
     text-indent: -9999px;
+    cursor: pointer;
 }
 
 
@@ -68,6 +90,7 @@ div #c .trash{
     background-size: 27px 27px;
     text-indent: -9999px;
     margin-left: 30px;
+    cursor: pointer;
 }
 
 div #c .trash:hover{
@@ -78,6 +101,7 @@ div #c .trash:hover{
     background-size: 27px 27px;
     text-indent: -9999px;
     margin-left: 30px;
+    cursor: pointer;
 }
 
 div #c .next{
@@ -88,6 +112,7 @@ div #c .next{
     background-size: 27px 27px;
     text-indent: -9999px;
     margin-left: 30px;
+    cursor: pointer;
 }
 div #c .next:hover{
     display: inline-block;
@@ -97,11 +122,63 @@ div #c .next:hover{
     background-size: 27px 27px;
     text-indent: -9999px;
     margin-left: 30px;
+    cursor: pointer;
 }
 
 div #r {
 
-        height: 190px;
+        height: 160px;
         width: 265px;
         float: right;
+}
+
+div #defaultbar{
+    height: 2px;
+    width: 225px;
+    display: block;
+    position: relative;
+    background: #e5e5e8;
+    margin-left: 20px;
+}
+
+div #progress{
+    background: #9dd6c5;
+    width: 0px;
+    height: 2px;
+    position: absolute;
+}
+
+div #p .pause{
+        display: block;
+        background: url(img/pause.svg);
+        background-size: 26px 26px;
+        cursor: pointer;
+        margin-left: 220px; 
+        height: 26px;
+        width: 26px;
+}
+
+div #p {
+        height: 26px;
+        width: 265px;
+        float: right;
+}
+div #m{
+        display: none;
+        height: 245px;
+        width: 265px;
+        float: right;
+        background: #fff;
+        z-index: 1;
+        position: absolute;
+        left: 245px;
+        opacity: 0.7;
+}
+
+#m span.play{
+    margin: 100px 100px;
+    font-size: 13px;
+    color:#333333;
+    display: inline-block;
+    cursor: pointer;
 }

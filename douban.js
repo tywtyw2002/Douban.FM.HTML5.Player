@@ -7,7 +7,24 @@
         return text;
     };
 
+
+    var new_DBR = {
+        act: function(u, s) {
+            console.log(u,s);
+            if(u == "switch"){
+                window.doubanfm.changeCH(s);
+            }
+        },
+    };
+
+
+
     var doubanfmhtml5 = {
+        changeCH: function(s){
+            this.channel = s;
+            this.playList('n');
+        },
+
         getRequestData: function(v) {
             if (v != 'n' && v != 'p'){
                 console.log("error with value " + v);
@@ -48,9 +65,12 @@
             var song = this.songList[i];
             console.log(song);
 
-            if(this.el.mp3 != undefined){
+            if(this.el.mp3 != undefined && this.el.mp3 != ""){
                 this.el.mp3.pause();
+                window.clearInterval(processbar);
                 this.el.mp3.src=""; //cancel the downloading
+                $("#progress").css("width", "0px");
+
             }
 
             // todo change title of the page
@@ -58,6 +78,8 @@
             var rightPanel = "<span class=\"artist\">" + song.artist +"</span>";
             rightPanel +=  "<span class=\"album\">&lt; " + song.albumtitle + " &gt; " +  song.public_time + "</span>";
             rightPanel +=  "<span class=\"title\">" + song.title + "</span>";
+            rightPanel +=  "<div id='defaultbar'><div id='progress'></div></div>"
+            rightPanel +=  "<span class='r_time'></span>"
             var cPanel ="";
             if (song.like) {
                 cPanel += '<div class="staron"></div>';
@@ -66,6 +88,8 @@
             }
             cPanel += '<div class="trash"></div>';
             cPanel += '<div id="next_song" class="next"></div>';
+            html += '<div id="m"><span class="play">Continue &gt;</span></div>';
+            html += '<div id="p"><div class="pause"></div></div>';
             html += '<div id="r">'+rightPanel+'</div>';
             html += '<div id="c">'+cPanel+'</div>';
             this.wrap.html(html);
@@ -75,15 +99,29 @@
                 that.nextSong();
             });
 
-            $("#staron").click( function() {
-                that.likeSong(song.sid);
+            $(".pause").click( function() {
+                that.el.mp3.pause();
+                $('#m').show();
             });
 
-            $("#staroff").click( function() {
-                that.unlikeSong(song.sid);
+            $(".play").click( function() {
+                that.el.mp3.play();
+                $('#m').hide();
             });
 
-            $("#trash").click( function() {
+            $(".staron").click( function() {
+                
+                user_record.decrease("liked");
+                this.attr("class", "staroff");
+            });
+
+            $(".staroff").click( function() {
+                
+                user_record.increase("liked");
+                this.attr("class", "staron");
+            });
+
+            $(".trash").click( function() {
                 that.byeSong(song.sid);
                 that.nextSong();
             });
@@ -91,11 +129,32 @@
             var soundfile = song.url;
             this.el.mp3 = new Audio(soundfile);
             this.el.mp3.play();
+            var mp3 = this.el.mp3;
+            processbar = setInterval(this.updatebar, 500);
             $(this.el.mp3).bind('ended', function () {
                 that.reportEnd(song.sid);
                 that.nextSong();
             });
         },
+
+        updatebar: function(){
+            var mp3 = doubanfm.el.mp3;
+            if(!mp3.ended){
+                if(mp3.paused){
+                    return;
+                }
+                c = parseInt(mp3.duration - mp3.currentTime);
+                m = parseInt(c/60);
+                ss = c % 60;
+                s = mp3.currentTime / mp3.duration;
+                $(".r_time").text( '-' + m + ":" + (ss < 10 ? "0" + ss : ss));
+                $("#progress").css("width", parseInt(225 * s) + "px");
+            }else{
+                window.clearInterval(processbar);
+            }
+
+        },
+
 
         byeSong: function(sid){
             var request = {
@@ -106,6 +165,7 @@
                 kbps: 192,
                 r: makeRandomString(10)
             };
+            user_record.increase("banned");
             this.reportSubmit(request);
 
         },
@@ -119,6 +179,7 @@
                 kbps: 192,
                 r: makeRandomString(10)
             };
+            that.likeSong(song.sid);
             this.reportSubmit(request);
         },
 
@@ -131,6 +192,7 @@
                 kbps: 192,
                 r: makeRandomString(10)
             };
+            that.unlikeSong(song.sid);
             this.reportSubmit(request);
 
         },
@@ -157,6 +219,7 @@
                 kbps: 192,
                 r: makeRandomString(10)
             };
+            user_record.increase("played");
             this.reportSubmit(request);
         },
 
@@ -197,6 +260,10 @@
         }
     };
     window.doubanfm = doubanfmhtml5;
+
+    //hack the act function.
+    window.DBR.act = new_DBR.act;
+
+    //enable the html5 player
     window.doubanfm.changeUI();
-    //doubanfmhtml5.changeUI();
 })();

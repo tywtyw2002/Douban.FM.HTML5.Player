@@ -11,8 +11,9 @@ javascript:(function(){var u='http://example.com/douban'; var r=new Date().getTi
 
 # ToDo
 - [x] Add rate/unrate/bye/next Function.
-- [ ] Add Music Pause control/volum control.
-- [ ] Add Music processbar/time remaining.
+- [x] Add Music Pause control.
+- [ ] Add Music volum control.
+- [x] Add Music processbar/time remaining.
 - [ ] Work for Channel choose.
 - [ ] Add support with fmx163.
 
