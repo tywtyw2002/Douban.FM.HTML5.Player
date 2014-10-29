@@ -6,10 +6,42 @@
 
 #r span.r_time{
         margin-left: 200px;
+        margin-right: 4px;
         font-size: 11px; 
         font-family: _sans; 
         color:#333333;
-        display: block;
+        display: inline-block;
+}
+
+#volume{
+    display: none;
+    margin-left: 180px;
+    position: absolute;
+    z-index: 1;
+    background: #FFFFFF;
+}
+span.r_volume{
+        background: url(img/volume.svg);
+        width:13px;
+        height: 10px;
+        display: inline-block;
+        margin-right: 2px;
+}
+div #v_defaultbar{
+    height: 2px;
+    width: 50px;
+    margin-bottom: 4px;
+    display: inline-block;
+    position: relative;
+    background: #e5e5e8;
+}
+
+div #v_progress{
+    background: #333333;
+    width: 0px;
+    height: 2px;
+    display: inline-block;
+    position: absolute;
 }
 
 #r  span.artist {
@@ -169,7 +201,7 @@ div #m{
         width: 265px;
         float: right;
         background: #fff;
-        z-index: 1;
+        z-index: 11;
         position: absolute;
         left: 245px;
         opacity: 0.7;

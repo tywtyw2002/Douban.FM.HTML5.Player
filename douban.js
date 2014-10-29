@@ -47,6 +47,7 @@
             this.el = document.getElementById('fm-player');
             this.wrap = $('div.player-wrap').html('加载中...');
             this.channel = -3;
+            this.volume = 0.5;
             this.playList('n', 0);
         },
 
@@ -134,6 +135,7 @@
 
             var soundfile = song.url;
             this.el.mp3 = new Audio(soundfile);
+            this.el.mp3.volume = this.volume;
             this.el.mp3.play();
             var mp3 = this.el.mp3;
             processbar = setInterval(this.updatebar, 500);
